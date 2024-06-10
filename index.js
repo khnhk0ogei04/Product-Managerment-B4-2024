@@ -1,6 +1,6 @@
 const express = require('express');
 
-const routeClient = require("./routes/index.routes");
+const routeClient = require("./routes/client/index.routes");
 const app = express();
 const port = 3000;
 app.set("views", "./views");
