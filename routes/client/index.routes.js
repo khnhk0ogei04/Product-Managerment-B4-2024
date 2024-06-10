@@ -1,6 +1,7 @@
-const homeRouter = require("./home.route");
-const productRouter = require("./product.route");
+const homeRoute = require("./home.route");
+const productRoute = require("./product.route");
 module.exports.index = (app) => {
-    app.get("/", homeRouter);
-    app.get("/products", productRouter);
+    app.get("/", homeRoute);
+    app.use("/home", homeRoute);
+    app.use("/products", productRoute);
 }
