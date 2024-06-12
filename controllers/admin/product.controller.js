@@ -29,12 +29,28 @@ module.exports.index = async (req, res) => {
         // keyword = req.query.keyword;
     }
     // Het Tim Kiem //
-    const products = await Product.find(find);
+    const pagination = {
+        currentPage: 4,
+        limitItems: 4
+    };
+    if (req.query.page){
+        pagination.currentPage = parseInt(req.query.page);
+    }
+    pagination.skip = (pagination.currentPage - 1)* pagination.limitItems;
+    const products = await Product.find(find)
+                .find(find)
+                .limit(pagination.limitItems)
+                .skip(pagination.skip);
         // console.log(products);
+    const countProducts = await Product.countDocuments(find);
+    const totalPage = Math.ceil(countProducts/pagination.limitItems);
+    console.log(totalPage);
+    pagination.totalPage = totalPage;
   res.render("admin/pages/products/index", {
     pageTitle: "Quản lý sản phẩm",
     products: products,
     filterStatus: filterStatus,
-    keyword: keyword
+    keyword: keyword,
+    pagination: pagination
   });
 }
