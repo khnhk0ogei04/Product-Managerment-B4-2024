@@ -1,6 +1,7 @@
 extends ../../layouts/default.pug
 include ../../mixins/filter-status.pug 
 include ../../mixins/search.pug
+include ../../mixins/pagination.pug
 block main
   h1(class="mb-4") Quản lý sản phẩm
   .card.mb-3 
@@ -39,21 +40,15 @@ block main
               td #{item.price}
               td
                 if (item.status == "active") 
-                  a(href="#" class="badge badge-success") Hoạt động 
+                  a(                  
+                    href=`/${prefixAdmin}/products/change-status/inactive/${item.id}` class="badge badge-success") Hoạt động 
                 else 
-                  a(href="#" class="badge badge-danger") Dung Hoat Dong
+                  a(href=`${prefixAdmin}/products/change-status/active/${item.id}` class="badge badge-danger") Dung Hoat Dong
               td
                 button(class="btn btn-warning btn-sm") Sửa
                 button(class="btn btn-danger btn-sm ml-1") Xóa
 
-    nav 
-      ul(class="pagination")
-        //- li(class="page-item")
-        //-   button(class="page-link") Trang trước
-        - for (var i = 1 ; i <= pagination.totalPage ; i++)
-          li(class="page-item")
-            button(class="page-link") #{i}                    
-
+    +pagination(pagination)
           //- tr 
           //-   td 2
           //-   td

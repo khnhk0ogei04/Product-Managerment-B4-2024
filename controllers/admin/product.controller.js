@@ -1,5 +1,5 @@
 const Product = require("../../models/product.model");
-
+const paginationHelper = require("../../helpers/pagination.helper");
 module.exports.index = async (req, res) => {
     const find = {
         deleted: false
@@ -29,23 +29,11 @@ module.exports.index = async (req, res) => {
         // keyword = req.query.keyword;
     }
     // Het Tim Kiem //
-    const pagination = {
-        currentPage: 4,
-        limitItems: 4
-    };
-    if (req.query.page){
-        pagination.currentPage = parseInt(req.query.page);
-    }
-    pagination.skip = (pagination.currentPage - 1)* pagination.limitItems;
+    const pagination = await paginationHelper(req);
     const products = await Product.find(find)
-                .find(find)
-                .limit(pagination.limitItems)
-                .skip(pagination.skip);
-        // console.log(products);
-    const countProducts = await Product.countDocuments(find);
-    const totalPage = Math.ceil(countProducts/pagination.limitItems);
-    console.log(totalPage);
-    pagination.totalPage = totalPage;
+                        .limit(pagination.limitItems)
+                        .skip(pagination.skip);
+
   res.render("admin/pages/products/index", {
     pageTitle: "Quản lý sản phẩm",
     products: products,
@@ -53,4 +41,16 @@ module.exports.index = async (req, res) => {
     keyword: keyword,
     pagination: pagination
   });
+}
+module.exports.changeStatus = async(req, res) => {
+    // console.log(req.params.id);
+    // const id = req.params.id;
+    // const statusChange = req.params.statusChange;
+    const {id, statusChange} = req.params;
+    await Product.updateOne({
+        _id: id,
+    },{
+        status: statusChange
+    })
+    res.redirect('back');
 }
