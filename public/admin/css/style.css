@@ -69,3 +69,13 @@
 }
 
 /* End Sider */
+/* Show alert */
+.show-alert{
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 999;
+}
+.show-alert.hidden{
+  display: none;
+}

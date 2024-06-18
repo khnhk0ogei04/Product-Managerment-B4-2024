@@ -215,3 +215,15 @@ if (listInputPosition.length > 0){
     console.log("OKE");
 }
 // Het thay doi vi tri
+// Show-Alert
+const showAlert = document.querySelector("[show-alert]");
+if (showAlert){
+    let time = showAlert.getAttribute("show-alert") || 3000;
+    time = parseInt(time);
+    console.log(time);
+    setTimeout(() => {
+        showAlert.classList.add("hidden");
+    }, time);
+} else {
+    console.log("OKE");
+}
