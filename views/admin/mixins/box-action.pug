@@ -1,0 +1,9 @@
+mixin box-actions(link)
+    div(class="input-group" box-actions=link)
+        select#inputGroupSelect04.custom-select(aria-label='Example')
+          option(selected='') Chọn hành động...
+          option(value='active') Hoạt động
+          option(value='inactive') Dừng hoạt động
+          option(value='delete') Xóa 
+        .input-group-append 
+          button.btn.btn-outline-secondary(type='button') Áp dụng
